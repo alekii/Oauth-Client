@@ -1,0 +1,24 @@
+server:
+  port: 8098
+  forward-headers-strategy: framework
+  servlet:
+    context-path: /security
+spring:
+  config:
+    import: optional:classpath:env.properties
+  security:
+    user:
+      name: admin
+      password: password
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    supported-submit-methods:
+      - get
+      - post
+    disable-swagger-default-url: true
+  packages-to-scan:
+    - com.oauth2_client
