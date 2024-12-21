@@ -22,3 +22,6 @@ springdoc:
     disable-swagger-default-url: true
   packages-to-scan:
     - com.oauth2_client
+
+keycloak:
+  auth-server-url: ${KEYCLOAK_BASE_URL:http://iam21.me.co.ke}

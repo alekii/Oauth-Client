@@ -2,6 +2,7 @@ package com.oauth2_client.service;
 
 import com.oauth2_client.models.AuthTokenRequest;
 import com.oauth2_client.models.AuthTokenResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.client.*;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
@@ -9,7 +10,10 @@ import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthService {
+public class TokenGenerationService {
+
+    @Value("${keycloak.auth-server-url}")
+    private String keycloakAuthServerUrl;
 
     public AuthTokenResponse generateAuthToken(AuthTokenRequest tokenRequest){
         ClientRegistration clientRegistration = ClientRegistration
@@ -17,7 +21,7 @@ public class AuthService {
                 .clientId(tokenRequest.getClientId())
                 .clientSecret(tokenRequest.getClientSecret())
                 .authorizationGrantType(org.springframework.security.oauth2.core.AuthorizationGrantType.CLIENT_CREDENTIALS)
-                .tokenUri("http://iam21.me.co.ke/realms/master/protocol/openid-connect/token")
+                .tokenUri(keycloakAuthServerUrl+"/realms/master/protocol/openid-connect/token")
                 .build();
 
         InMemoryClientRegistrationRepository clientRegistrationRepository = new InMemoryClientRegistrationRepository(clientRegistration);
